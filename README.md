@@ -3,13 +3,14 @@
 ## Apurv Adarsh (Frontend Web Developer Nanodegree- Udacity)
 
 
-## To run the project: [http://apurvadarsh.github.io/] Open index.html and view the test results on scrolling down to the bottom alongwith other details.
-## About the project:
+### To run the project: Open [index.html](http://apurvadarsh.github.io/) and view the test results along with other result specifics on scrolling down to the bottom
+.
+### About the project:
 
 How to use Jasmine to write a number of tests against a pre-existing application. These will test the underlying business logic of the application as well as the event handling and DOM manipulation.
 
 
-## Functionalities:
+### Functionalities:
 
 1. [Project assets](http://github.com/udacity/frontend-nanodegree-feedreader).
 2. Test that loops through each feed in the allFeeds object and ensures it has a URL defined and that the URL is not empty.
