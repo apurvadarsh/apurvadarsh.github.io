@@ -132,16 +132,3 @@ $(function() {
     });
 }());
 
-// To check if the URL is defined and is valid or not
-function isUrlDefined(url) {
-    try {
-        return !!url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/);
-    } catch (error) {
-        return false;
-    }
-}
-
-// To check if the URL is empty or non empty
-function isUrlEmpty(string) {
-    return (!string || /^\s*$/.test(string));
-}

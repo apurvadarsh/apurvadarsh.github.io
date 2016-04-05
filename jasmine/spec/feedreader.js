@@ -7,6 +7,20 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
+
+ // To check if the URL is defined and is valid or not
+function isUrlDefined(url) {
+    try {
+        return !!url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/);
+    } catch (error) {
+        return false;
+    }
+}
+
+// To check if the URL is empty or non empty
+function isNameEmpty(string) {
+    return (!string || /^\s*$/.test(string));
+}
 $(function() {
     /* This is our first test suite - a test suite just contains
      * a related set of tests. This suite is all about the RSS
@@ -29,7 +43,7 @@ $(function() {
         it('have valid URLs defined', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
-                expect(isUrlDefined(feed.url)).toBe(true);
+                expect(isUrlDefined(feed.url)).toBeTruthy();
             });
         });
 
@@ -38,10 +52,10 @@ $(function() {
          * and that the name is not empty.
          */
 
-        it('have non-empty URLs', function() {
+        it('have valid names defined', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
-                expect(isUrlEmpty(feed.name)).not.toBe(true);
+                expect(isNameEmpty(feed.name)).not.toBeTruthy();
             });
         });
     });
@@ -55,7 +69,7 @@ $(function() {
         var body = $('body');
 
         it('is hidden by default', function() {
-            expect(body.hasClass('menu-hidden')).toBe(true);
+            expect(body.hasClass('menu-hidden')).toBeTruthy();
         });
         /* Test that ensures the menu changes
          * visibility when the menu icon is clicked. This test
@@ -65,9 +79,9 @@ $(function() {
         var menuIcon = $('.menu-icon-link');
         it('changes visibility when the menu icon is clicked', function() {
             menuIcon.trigger('click');
-            expect(body.hasClass('menu-hidden')).toBe(false);
+            expect(body.hasClass('menu-hidden')).toBeFalsy();
             menuIcon.trigger('click');
-            expect(body.hasClass('menu-hidden')).toBe(true);
+            expect(body.hasClass('menu-hidden')).toBeTruthy();
         });
 
     });
@@ -84,7 +98,7 @@ $(function() {
         });
         it('has at least a single entry', function() {
             var entries = $('.feed .entry');
-            expect(entries.length >= 1).toBe(true);
+            expect(entries.length).toBeGreaterThan(0);
         });
     });
 
@@ -103,16 +117,16 @@ $(function() {
          */
         beforeEach(function(done) {
             /* To ensure that there are at least two feeds */
-            expect(allFeeds.length >= 2).toBe(true);
+            expect(allFeeds.length).toBeGreaterThan(1);
 
             /* Load the first feed */
             loadFeed(0, function() {
                 /* Set the beforeLoad to content of feed */
-                beforeLoad = $('.header-title').text();
+                beforeLoad = $('.feed .entry').text();
                 /* Load second feed at index 1 */
                 loadFeed(1, function() {
                     /* Set the afterLoad to content of new feed */
-                    afterLoad = $('.header-title').text();
+                    afterLoad = $('.feed .entry').text();
                     done();
                 });
             });
@@ -121,9 +135,9 @@ $(function() {
         /* Tests that when a new feed is loaded by the loadFeed function
          * that the content actually changes.
          */
-        it('changes content when feed is loaded', function(done) {
-            expect(beforeLoad == afterLoad).toBe(false);
-            done();
+        it('changes content when feed is loaded', function() {
+            expect(beforeLoad).not.toEqual(afterLoad);
+
         });
     });
 
